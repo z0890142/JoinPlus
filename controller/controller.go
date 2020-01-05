@@ -29,10 +29,10 @@ func CallbackHandler(w http.ResponseWriter, r *http.Request) {
 			case *linebot.TextMessage:
 				quota, err := bot.GetMessageQuota().Do()
 				if err != nil {
-					log.Println("Quota err:", err)
+					Log.Error("Quota err:", err)
 				}
 				if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.ID+":"+message.Text+" OK! remain message:"+strconv.FormatInt(quota.Value, 10))).Do(); err != nil {
-					log.Print(err)
+					Log.Info(err)
 				}
 			}
 		}
