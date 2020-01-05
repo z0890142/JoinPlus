@@ -1,0 +1,62 @@
+{
+  "ManufacturerAccount": "",
+  "ManufacturerKey": "",
+  "RuleList": [
+    {
+      "ServiceID": "service_55",
+      "Value": "0001",
+      "Enable": "1",
+      "Description": "test init",
+      "Logic": "=",
+      "Level": "2"
+    },
+    {
+      "ServiceID": "service_04",
+      "Value": "0001",
+      "Enable": "1",
+      "Description": "煙霧警報",
+      "Logic": "=",
+      "Level": "2"
+    },
+    {
+      "ServiceID": "service_09",
+      "Value": "0001",
+      "Enable": "1",
+      "Description": "一氧化碳警報",
+      "Logic": ">",
+      "Level": "2"
+    },
+    {
+      "ServiceID": "service_0a",
+      "Value": "0006",
+      "Enable": "1",
+      "Description": "甲醛濃度警報",
+      "Logic": ">",
+      "Level": "2"
+    },
+    {
+      "ServiceID": "service_0f",
+      "Value": "0001",
+      "Enable": "1",
+      "Description": "淹水警報",
+      "Logic": "=",
+      "Level": "2"
+    },
+    {
+      "ServiceID": "service_45",
+      "Value": "0001",
+      "Enable": "1",
+      "Description": "裝置外殼移除警報",
+      "Logic": "=",
+      "Level": "2"
+    },
+    {
+      "ServiceID": "service_46",
+      "Value": "0001",
+      "Enable": "1",
+      "Description": "用電過載警報",
+      "Logic": "=",
+      "Level": "2"
+    }
+  ]
+}
