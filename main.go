@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/gorilla/mux"
 	"github.com/line/line-bot-sdk-go/linebot"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -24,8 +25,10 @@ func init() {
 
 func main() {
 	var err error
-	bot, err = linebot.New(viper.GetString("Line.ChannelSecret"), viper.GetString("Line.ChannelAccessToken"))
-
+	channelSecret := viper.GetString("Line.ChannelSecret")
+	channelAccessToken := viper.GetString("Line.ChannelAccessToken")
+	bot, err = linebot.New(channelSecret, channelAccessToken)
+	controller.SetLineBot(bot)
 	if err != nil {
 		Log.WithFields(logrus.Fields{
 			"ChannelSecret":      viper.GetString("Line.ChannelSecret"),
@@ -36,7 +39,13 @@ func main() {
 	http.HandleFunc("/callback", controller.CallbackHandler)
 	port := "8088"
 	addr := fmt.Sprintf(":%s", port)
-	http.ListenAndServeTLS(addr, "./static/ssl/https-server.crt", "./static/ssl/https-server.key", nil)
+
+	router := mux.NewRouter()
+	fs := http.FileServer(http.Dir("./static/.well-known/acme-challenge"))
+	router.PathPrefix("/.well-known/acme-challenge/").Handler(http.StripPrefix("/.well-known/acme-challenge/", fs))
+
+	http.ListenAndServeTLS(addr, "./static/ssl/bundle.crt", "./static/ssl/private.key", nil)
+	// http.ListenAndServe(addr, router)
 }
 func InitConfig() {
 	viper.SetConfigType("yaml")
